@@ -31,10 +31,6 @@ def CDF(a, A, u) -> float:
         return 0
     return ceil((u * (1 - n) / k)**(1 / (1 - n))*100)/100
 
-# 定义一个函数来收集每个代理的财富
-def compute_wealth_distribution(model):
-    return {f"agent{agent.unique_id}": agent.wealth_report for agent in model.schedule.agents}
-
 
 class Person(Agent):
     """可以抢红包更新个人财富的的人"""
