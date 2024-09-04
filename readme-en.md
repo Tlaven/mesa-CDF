@@ -19,10 +19,10 @@ After cloning the project, you can use the following command to create a virtual
 
 ```bash
 # Clone the project
-git clone <your-repo-url>
+git clone https://github.com/Tlaven/mesa-CDF.git
 
 # Enter the project directory
-cd <your-repo-directory>
+cd mesa-CDF
 
 # Use Poetry to install dependencies and create a virtual environment
 poetry install
