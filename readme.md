@@ -19,10 +19,10 @@ pip install poetry
 
 ```bash
 # 克隆项目
-git clone <your-repo-url>
+git clone https://github.com/Tlaven/mesa-CDF.git
 
 # 进入项目目录
-cd <your-repo-directory>
+cd mesa-CDF
 
 # 使用Poetry安装依赖并创建虚拟环境
 poetry install
