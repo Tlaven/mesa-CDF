@@ -12,6 +12,7 @@ import random
 
 NUMBER_OF_PEOPLE = 6  # 人数
 SEND_RED_PACKET_AMOUNT = 100  # 发红包金额
+EXPECTED_NUMBER_OF_RED_ENVELOPES_TO_BE_DISTRIBUTED = 5  # 预期红包分配数量
 
 
 def CDF(a, A, u) -> float:
@@ -23,12 +24,10 @@ def CDF(a, A, u) -> float:
     :param u: 均匀分布随机数，范围在[0,1]
     :return: 对应的CDF逆函数值
     """
-    if a <= A:
+    if a + 1e-12 <= A: # 增加一个微小值，防止计算误差，避免除数为0
         return ceil(a*100)/100
-    n = (a - 2 * A) / (a - A)
-    k = (1 - n) * a**(n - 1)
-    if (1 - n)/k <= 0:
-        return 0
+    n = (a - 2 * A) / (a - A)  # -inf < n < 1
+    k = (1 - n) * a**(n - 1) 
     return ceil((u * (1 - n) / k)**(1 / (1 - n))*100)/100
 
 
@@ -56,7 +55,7 @@ class Person(Agent):
             print(f"agent{self.unique_id}抢到最后一张红包：{grab_amount:.2f}")
         else:
             # 计算抢到的红包金额
-            grab_amount = CDF(red_packet_amount, SEND_RED_PACKET_AMOUNT / NUMBER_OF_PEOPLE, random.uniform(0, 1))
+            grab_amount = CDF(red_packet_amount, SEND_RED_PACKET_AMOUNT / EXPECTED_NUMBER_OF_RED_ENVELOPES_TO_BE_DISTRIBUTED, random.uniform(0, 1))
             if grab_amount >= red_packet_amount:
                 print(f"agent{self.unique_id}抢到最后一张红包：{
                       red_packet_amount:.2f}")
@@ -75,6 +74,8 @@ class Person(Agent):
             # 更新模型中的红包金额
             self.grab_record.append(grab_amount)
             self.model.send_red_packet_amount[0] -= grab_amount
+        else:
+            self.grab_record.append(0)
 
 
 # 创建一个图表模块，用于显示每个财富级别的代理数量

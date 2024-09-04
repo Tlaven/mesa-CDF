@@ -6,8 +6,8 @@ authors = ["Tlaven <2515406347@qq.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-
+python = "3.12"
+mesa = "2.3.3"
 
 [build-system]
 requires = ["poetry-core"]
